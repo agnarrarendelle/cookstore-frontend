@@ -3,8 +3,8 @@
 
 </script>
 <template>
-    <h1>This is admin index page</h1>
-    <router-view></router-view>
+    <h1>This is admin product page</h1>
+
 </template>
 
 <style scoped></style>
