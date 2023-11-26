@@ -11,6 +11,7 @@ import {
   Router,
   RouteRecordRaw,
 } from "vue-router";
+import AdminProducts from "../views/admin/AdminProducts.vue";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -39,9 +40,15 @@ const routes: RouteRecordRaw[] = [
     component: AdminLogin,
   },
   {
-    path: "/admin/index",
+    path: "/admin",
     name: "admin index",
     component: AdminIndex,
+    children: [
+      {
+        path: "products",
+        component: AdminProducts,
+      },
+    ],
   },
 ];
 
@@ -60,7 +67,7 @@ router.beforeEach(async (to, _, next) => {
     if (!isAuthenticated) next({ name: "home" });
   }
 
-  next()
+  next();
 });
 
 export default router;
