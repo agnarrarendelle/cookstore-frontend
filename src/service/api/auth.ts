@@ -1,4 +1,5 @@
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
+import axios from "../index"
 import { ApiResponse, UserEntryResult } from "../response-type";
 export const login = async (
   email: string,
