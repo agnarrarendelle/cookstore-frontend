@@ -4,6 +4,11 @@ export interface ApiResponse<T> {
   data: T;
 }
 
-export interface UserEntryResult{
-    token:string
+export interface UserEntryResult {
+  token: string;
+}
+
+export interface ProductImageResult {
+  uploadUrl: string;
+  imageId: string
 }
