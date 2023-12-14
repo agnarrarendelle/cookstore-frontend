@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { reactive, onMounted } from 'vue'
+import { reactive, onMounted, ref } from 'vue'
 import { CategoryResult } from "../service/response-type"
 import { getCategoryWithProduct } from "../service/api/category"
-
+import ProductDetailModal from './ProductDetailModal.vue';
 onMounted(async () => {
     const res = await getCategoryWithProduct(props.categoryId)
 
@@ -14,6 +14,8 @@ onMounted(async () => {
 
 const props = defineProps<{
     categoryId: number
+    addOrderItem: (id: number, name: string, price: number, number: number) => void
+    removeOrderItem: (id: number) => void
 }>()
 
 const category = reactive<CategoryResult>(
@@ -23,10 +25,28 @@ const category = reactive<CategoryResult>(
         products: []
     })
 
+const selectedProduct = reactive({
+    id: 0,
+    name: '',
+    description: '',
+    price: 0,
+    discount: 0
+})
+
+const isModalOpen = ref(false)
+
+const openModal = (id: number, name: string, description: string, price: number, discount: number) => {
+    Object.assign(selectedProduct, { id, name, description, price, discount })
+    isModalOpen.value = true
+}
+
+const closeModal = () => {
+    isModalOpen.value = false
+}
 
 </script>
 <template>
-    <h2>{{ category.name }}</h2>
+    <h5 class="text-center">{{ category.name }}</h5>
     <div class="p-6">
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
             <template v-for=" product in category.products">
@@ -45,7 +65,8 @@ const category = reactive<CategoryResult>(
                             <div v-if="product.discount > 0">
                                 <h2 class="mt-2 text-lg font-semibold text-red-500">{{ product.discount * 100 }}%OFF</h2>
                             </div>
-                            <div class="w-full text-end">
+                            <div class="w-full text-end"
+                                @click="openModal(product.id, product.name, product.description, product.price, product.discount)">
                                 <span
                                     class="min-w-full text-center mt-2 inline-block rounded-full bg-orange-400 p-3 text-lg font-medium text-white">{{
                                         product.price }}$
@@ -73,6 +94,14 @@ const category = reactive<CategoryResult>(
             </template>
         </div>
     </div>
+
+    <template v-if="isModalOpen">
+        <ProductDetailModal :category-name="category.name" :is-modal-open="isModalOpen" :close-modal="closeModal"
+            :product-id="selectedProduct.id" :product-name="selectedProduct.name"
+            :product-description="selectedProduct.description" :price="selectedProduct.price"
+            :discount="selectedProduct.discount" :add-order-item="props.addOrderItem">
+        </ProductDetailModal>
+    </template>
 </template>
 
 <style scoped>
