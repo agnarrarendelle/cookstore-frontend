@@ -13,6 +13,8 @@
     "axios-auth-refresh": "^3.3.6",
     "bootstrap": "^4.5.3",
     "element-plus": "^2.4.2",
+    "flowbite": "^2.2.0",
+    "flowbite-vue": "^0.1.1",
     "vue": "^3.3.4",
     "vue-axios": "^3.5.2",
     "vue-router": "^4.2.5",
