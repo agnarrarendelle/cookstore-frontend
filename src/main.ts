@@ -8,6 +8,7 @@ import router from "./router/index";
 import { store } from "./state";
 import axios from "./service/index";
 import VueAxios from "vue-axios";
+import 'flowbite';
 
 const app = createApp(App);
 
