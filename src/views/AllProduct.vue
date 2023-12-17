@@ -33,7 +33,16 @@ const removeOrderItem = (id: number) => {
 }
 </script>
 <template>
-    <div class="w-11/12 my-2 text-end">
+    <div class="mx-auto flex flex-col justify-center bg-red-800 py-2">
+        <div>
+            <ul class="flex flex-row gap-4 overflow-y-auto">
+                <li v-for="category in categories" class="px-4 py-2 bg-gray-800 rounded-full">
+                    <a @click="(e)=>e.preventDefault()" :href="`#${category.name}`">{{category.name}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="w-11/12 my-2 text-end" @click="() => isOrderSubmitModalOpen = true">
         <button class="right-0 top-0 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Submit your order
         </button>

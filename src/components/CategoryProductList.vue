@@ -46,7 +46,9 @@ const closeModal = () => {
 
 </script>
 <template>
-    <h5 class="text-center">{{ category.name }}</h5>
+    <div :id="category.name">
+        <h5 class="text-center">{{ category.name }}</h5>
+    </div>
     <div class="p-6">
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
             <template v-for=" product in category.products">
