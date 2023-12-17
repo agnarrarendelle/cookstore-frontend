@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { CategoryResult } from "../service/response-type"
 import { getCategories } from "../service/api/category"
-import { reactive, onMounted } from "vue"
+import { reactive, onMounted, ref } from "vue"
 import CategoryProductList from "../components/CategoryProductList.vue";
-
-interface OrderItem {
+import SubmitOrderModal from "../components/SubmitOrderModal.vue";
+export interface OrderItem {
     name: string,
     price: number,
     number: number
@@ -16,6 +16,7 @@ onMounted(async () => {
 
 const categories = reactive<CategoryResult[]>([])
 const orderItems = reactive<Map<number, OrderItem>>(new Map())
+const isOrderSubmitModalOpen = ref(false)
 
 const addOrderItem = (id: number, name: string, price: number, number: number) => {
     if (orderItems.has(id)) {
@@ -51,6 +52,12 @@ const removeOrderItem = (id: number) => {
     <template v-for="category in categories">
         <CategoryProductList :category-id="category.id!" :add-order-item="addOrderItem"
             :remove-order-item="removeOrderItem"></CategoryProductList>
+    </template>
+
+    <template v-if="isOrderSubmitModalOpen">
+        <SubmitOrderModal :order-items="orderItems" :remove-order-item="removeOrderItem"
+            :close-modal="() => isOrderSubmitModalOpen = false">
+        </SubmitOrderModal>
     </template>
 </template>
 
