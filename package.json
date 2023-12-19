@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@stomp/stompjs": "^7.0.0",
     "axios": "^1.6.2",
     "axios-auth-refresh": "^3.3.6",
     "bootstrap": "^4.5.3",
@@ -18,7 +19,8 @@
     "vue": "^3.3.4",
     "vue-axios": "^3.5.2",
     "vue-router": "^4.2.5",
-    "vuex": "^4.1.0"
+    "vuex": "^4.1.0",
+    "ws": "^8.15.1"
   },
   "devDependencies": {
     "@types/node": "^20.9.1",
