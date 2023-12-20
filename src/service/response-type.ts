@@ -14,7 +14,7 @@ export interface ProductImageResult {
 }
 
 export interface ProductResult {
-  id:number,
+  id: number;
   name: string;
   status: string;
   description: string;
@@ -26,4 +26,23 @@ export interface CategoryResult {
   name: string;
   id: number | null;
   products: Array<ProductResult>;
+}
+
+export interface OrderItemResult {
+  productName: string;
+  number: number;
+  totalAmount: number;
+  actualAmount: number;
+  discount: number;
+}
+
+export interface OrderResult {
+  id: number;
+  status: string;
+  totalAmount: number;
+  actualAmount: number;
+  remark: string;
+  customerName: string;
+  tableNumber: number;
+  orderItems: OrderItemResult[];
 }
