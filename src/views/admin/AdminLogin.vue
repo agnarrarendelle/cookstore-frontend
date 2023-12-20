@@ -58,7 +58,6 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 
     const res = await login(ruleForm.email, ruleForm.password);
     store.commit(MutationTypes.SET_JWT_AUTH_TOKEN, res.data.token)
-    store.commit(MutationTypes.INIT_WEB_SOCKET, "")
     router.push({ name: 'admin index' })
 }
 
