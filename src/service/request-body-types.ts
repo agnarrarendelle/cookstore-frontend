@@ -4,11 +4,18 @@ export interface ProductBody {
   price: number;
   discount: number;
   categoryId: number;
-  productImageId:string
+  productImageId: string;
 }
 
 export interface ProductImageBody {
   id: string;
   name: string;
   productId: number;
+}
+
+export enum OrderStatus {
+  Paid = "Paid",
+  Unpaid = "Unpaid",
+  Cancelled = "Cancelled",
+  Finished = "Finished",
 }
