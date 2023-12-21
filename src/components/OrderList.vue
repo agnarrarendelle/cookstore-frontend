@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
 import { setOrderStatusCancelled, setOrderStatusPaid } from '../service/api/admin/orders';
-import { OrderStatus } from '../service/request-body-types';
 import { OrderResult } from '../service/response-type';
+import { useStore } from "../state/index"
 import { FwbButton } from "flowbite-vue"
 import OrderDetailModal from './OrderDetailModal.vue';
+import { MutationTypes } from '../state/mutation-types';
 
-const props = defineProps<{
-    orders: OrderResult[]
-}>()
+const store = useStore()
+
 
 const isModalOpen = ref(false)
 const selectedOrder = reactive<OrderResult>({
@@ -33,12 +33,12 @@ const closeModal = () => {
 
 const onSetPaidButtonClicked = async (index: number, orderId: number) => {
     await setOrderStatusPaid(orderId)
-    props.orders[index].status = OrderStatus.Paid
+    store.commit(MutationTypes.MARK_ORDER_PAID, index)
 }
 
 const onCancelButtonClicked = async (index: number, orderId: number) => {
     await setOrderStatusCancelled(orderId)
-    props.orders[index].status = OrderStatus.Cancelled
+    store.commit(MutationTypes.CANCEL_ORDER, index)
 }
 </script>
 <template>
@@ -64,7 +64,7 @@ const onCancelButtonClicked = async (index: number, orderId: number) => {
                         </tr>
                     </thead>
                     <tbody class="text-gray-500">
-                        <tr class="cursor-pointer" v-for="(order, index) in props.orders" @click="openModal(order)">
+                        <tr class="cursor-pointer" v-for="(order, index) in store.getters.orders" @click="openModal(order)">
                             <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
                                 <p class="whitespace-no-wrap">{{ order.id }}</p>
                             </td>
@@ -94,13 +94,13 @@ const onCancelButtonClicked = async (index: number, orderId: number) => {
                             </td>
                             <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
                                 <fwb-button gradient="cyan-blue" size="xs"
-                                    @click="async () => { await onSetPaidButtonClicked(index, order.id) }">
+                                    @click.stop="async () => { await onSetPaidButtonClicked(index, order.id) }">
                                     Set Paid
                                 </fwb-button>
                             </td>
                             <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
                                 <fwb-button color="red" pill size="xs"
-                                    @click="async () => { await onCancelButtonClicked(index, order.id) }">
+                                    @click.stop="async () => { await onCancelButtonClicked(index, order.id) }">
                                     Cancel
                                 </fwb-button>
                             </td>
