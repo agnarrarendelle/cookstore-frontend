@@ -12,6 +12,8 @@ import {
   RouteRecordRaw,
 } from "vue-router";
 import AdminProducts from "../views/admin/AdminProducts.vue";
+import AdminUploadNewProduct from "../views/admin/AdminUploadNewProduct.vue";
+import AdminUnpaidOrders from "../views/admin/AdminUnpaidOrders.vue";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -47,6 +49,15 @@ const routes: RouteRecordRaw[] = [
       {
         path: "products",
         component: AdminProducts,
+      },
+      {
+        path: "upload-product",
+        component: AdminUploadNewProduct,
+      },
+      {
+        path: "unpaid-orders",
+        name: "unpaid orders",
+        component: AdminUnpaidOrders,
       },
     ],
   },
