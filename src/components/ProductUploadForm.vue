@@ -4,9 +4,12 @@ import type { FormInstance, FormRules } from 'element-plus'
 import type { UploadInstance, UploadProps, UploadRawFile, UploadFile, UploadFiles } from 'element-plus'
 import { getProductImageUploadUrl } from "../service/api/admin/product-image"
 import { addProduct } from "../service/api/admin/product"
+import { FwbModal } from "flowbite-vue"
 
 const props = defineProps<{
-    categoryId: number
+    categoryId: number,
+    categoryName: string,
+    closeModal:()=>void
 }>()
 
 const isLoading: Ref<boolean> = ref(false)
@@ -160,8 +163,16 @@ const createImage = (file: File) => {
 
 </script>
 <template>
-    <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="120px" class="demo-ruleForm" :size="formSize"
+    <FwbModal @close="props.closeModal">
+        <template #header>
+            
+        </template>
+        <template #body>
+            <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="120px" class="demo-ruleForm" :size="formSize"
         status-icon>
+        <el-form-item label="category" prop="category">
+            <el-input v-model="props.categoryName" />
+        </el-form-item>
         <el-form-item label="name" prop="name">
             <el-input v-model="ruleForm.name" />
         </el-form-item>
@@ -191,6 +202,12 @@ const createImage = (file: File) => {
             <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
         </el-form-item>
     </el-form>
+        </template>
+        <template #footer>
+            
+        </template>
+
+    </FwbModal>
 </template>
 
 <style scoped></style>
