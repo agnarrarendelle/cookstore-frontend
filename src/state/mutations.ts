@@ -18,7 +18,7 @@ export const mutations: MutationTree<State> & Mutations = {
   [MutationTypes.SET_JWT_AUTH_TOKEN](state, newToken: string | null) {
     state.jwtAuthToken = newToken;
   },
-  [MutationTypes.INIT_WEB_SOCKET](state, config:WebsocketConfig): void {
+  [MutationTypes.INIT_WEB_SOCKET](state, config: WebsocketConfig): void {
     const client = new Client({
       brokerURL: "ws://localhost:8080/ws-endpoint",
       connectHeaders: {
@@ -26,9 +26,9 @@ export const mutations: MutationTree<State> & Mutations = {
       },
       onConnect: () => {
         client.subscribe("/user/" + "matt" + "/new_order", (message) => {
-          console.log("new order!")
+          console.log("new order!");
           const newOrder: OrderResult = JSON.parse(message.body);
-          config.orders.push(newOrder);
+          state.orders.push(newOrder);
         });
       },
       onWebSocketError: (e) => {
