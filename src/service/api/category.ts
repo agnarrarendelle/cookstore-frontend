@@ -12,3 +12,8 @@ export const getCategoryWithProduct = async (id: number) => {
   );
   return res.data;
 };
+
+export const getCategoriesWithProducts = async()=>{
+  const res = await axios.get<ApiResponse<Array<CategoryResult>>>("/category/products");
+  return res.data;
+}
