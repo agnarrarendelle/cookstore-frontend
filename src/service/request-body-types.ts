@@ -21,3 +21,8 @@ export enum OrderStatus {
   Cancelled = "Cancelled",
   Finished = "Finished",
 }
+
+export enum ProductStatus {
+  Available = "Available",
+  Unavailable = "Unavailable",
+}
