@@ -1,31 +1,32 @@
 <script setup lang="ts">
 
-import { ref } from 'vue'
+import {
+    FwbNavbar,
+    FwbNavbarCollapse,
+    FwbNavbarLink,
+} from 'flowbite-vue'
 
-const activeIndex = ref('1')
-const handleSelect = (key: string, keyPath: string[]) => {
-    console.log(key, keyPath)
-}
+
 </script>
 <template>
-    <el-menu :default-active="activeIndex" class="el-menu-demo" background-color="#545c64" active-text-color="#ffd04b"
-        text-color="#fff" mode="horizontal" :ellipsis="false" @select="handleSelect">
-        <el-menu-item index="0">
-            <img style="width: 100px" src="/images/element-plus-logo.svg" alt="Element logo" />
-        </el-menu-item>
-        <div class="flex-grow" />
-        <el-sub-menu index="2">
-            <template #title>Workspace</template>
-            <el-menu-item index="2-1">item one</el-menu-item>
-            <el-menu-item index="2-2">item two</el-menu-item>
-            <el-menu-item index="2-3">item three</el-menu-item>
-
-        </el-sub-menu>
-    </el-menu>
+    <fwb-navbar class="border-gray-200 p-3 bg-gray-200 dark:bg-gray-800 dark:border-gray-700">
+        <template #default="{ isShowMenu }">
+            <fwb-navbar-collapse :is-show-menu="isShowMenu">
+                <fwb-navbar-link>
+                    <router-link to="/admin/products">products</router-link>
+                </fwb-navbar-link>
+                <fwb-navbar-link>
+                    <router-link to="/admin/upload-product">upload product</router-link>
+                </fwb-navbar-link>
+                <fwb-navbar-link>
+                    <router-link to="/admin/unpaid-orders">unpaid orders</router-link>
+                </fwb-navbar-link>
+                <fwb-navbar-link>
+                    <router-link to="/admin/categories">categories</router-link>
+                </fwb-navbar-link>
+            </fwb-navbar-collapse>
+        </template>
+    </fwb-navbar>
 </template>
 
-<style scoped>
-.flex-grow {
-    flex-grow: 1;
-}
-</style>
+<style scoped></style>
