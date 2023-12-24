@@ -1,15 +1,26 @@
 <script setup lang="ts">
-import { FwbModal, FwbButton } from "flowbite-vue"
-import { OrderItem } from "../views/AllProduct.vue";
+import { FwbModal, FwbButton, FwbTextarea } from "flowbite-vue"
+import { addOrder } from "../service/api/order";
+import { ref } from "vue";
+import { OrderItemBody } from "../service/request-body-types";
 
 const props = defineProps<{
-    orderItems: Map<number, OrderItem>,
+    orderItems: Map<number, OrderItemBody>,
+    tableNumber: number,
     removeOrderItem: (productId: number) => void
     closeModal: () => void
 }>()
 
-const onSubmit = async () => {
+const remark = ref("")
 
+const onSubmit = async () => {
+    await addOrder({
+        tableNumber: props.tableNumber,
+        remark: remark.value,
+        orderItems: Array.from(props.orderItems.values())
+    })
+
+    props.orderItems.clear()
 }
 
 
@@ -29,7 +40,7 @@ const onSubmit = async () => {
                 <li v-for="[productId, orderItem] in props.orderItems">
                     <div class="px-4 py-5 sm:px-6">
                         <div class="flex items-center justify-between">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900">{{ orderItem.name }}</h3>
+                            <h3 class="text-lg leading-6 font-medium text-gray-900">{{ orderItem.productName }}</h3>
                             <p class="mt-1 max-w-2xl text-sm text-gray-500">x {{ orderItem.number }}</p>
                         </div>
                         <div class="mt-4 flex items-center justify-between">
@@ -45,7 +56,8 @@ const onSubmit = async () => {
             </ul>
         </template>
         <template #footer>
-            <div v-if="props.orderItems.size > 0" class="flex justify-between">
+            <div v-if="props.orderItems.size > 0" class="flex-col flex justify-between">
+                <fwb-textarea v-model="remark" :rows="4" label="Your message" placeholder="Send some remark" />
                 <fwb-button :disabled="false" @click="onSubmit" gradient="cyan-blue">
                     Submit
                 </fwb-button>
