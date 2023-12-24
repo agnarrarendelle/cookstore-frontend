@@ -4,11 +4,8 @@ import { getCategories } from "../service/api/category"
 import { reactive, onMounted, ref } from "vue"
 import CategoryProductList from "../components/CategoryProductList.vue";
 import SubmitOrderModal from "../components/SubmitOrderModal.vue";
-export interface OrderItem {
-    name: string,
-    price: number,
-    number: number
-}
+const tableNumber = 10;
+
 onMounted(async () => {
     const res = await getCategories()
     categories.push(...res.data)
@@ -55,7 +52,7 @@ const removeOrderItem = (id: number) => {
     </template>
 
     <template v-if="isOrderSubmitModalOpen">
-        <SubmitOrderModal :order-items="orderItems" :remove-order-item="removeOrderItem"
+        <SubmitOrderModal :table-number="tableNumber" :order-items="orderItems" :remove-order-item="removeOrderItem"
             :close-modal="() => isOrderSubmitModalOpen = false">
         </SubmitOrderModal>
     </template>
