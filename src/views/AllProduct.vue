@@ -7,7 +7,7 @@ import SubmitOrderModal from "../components/SubmitOrderModal.vue";
 const tableNumber = 10;
 
 onMounted(async () => {
-    const res = await getCategories()
+    const res = await getCategoriesWithProducts(ProductStatus.Available)
     categories.push(...res.data)
 })
 
