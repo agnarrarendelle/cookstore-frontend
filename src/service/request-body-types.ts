@@ -1,11 +1,11 @@
 export interface ProductBody {
-  productId?:number
+  productId?: number;
   name: string;
   description: string;
   price: number;
   discount: number;
   categoryId: number;
-  isAvailable?:boolean;
+  isAvailable?: boolean;
   productImageId?: string;
 }
 
