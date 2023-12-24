@@ -1,29 +1,15 @@
 <script setup lang="ts">
-import { reactive, onMounted, ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { CategoryResult } from "../service/response-type"
-import { getCategoryWithProduct } from "../service/api/category"
 import ProductDetailModal from './ProductDetailModal.vue';
-onMounted(async () => {
-    const res = await getCategoryWithProduct(props.categoryId)
 
-    const { id, name, products } = res.data
-    category.id = id
-    category.name = name
-    category.products = products
-})
 
 const props = defineProps<{
-    categoryId: number
+    category: CategoryResult
     addOrderItem: (id: number, name: string, price: number, number: number) => void
     removeOrderItem: (id: number) => void
 }>()
 
-const category = reactive<CategoryResult>(
-    {
-        name: '',
-        id: null,
-        products: []
-    })
 
 const selectedProduct = reactive({
     id: 0,
@@ -46,12 +32,12 @@ const closeModal = () => {
 
 </script>
 <template>
-    <div :id="category.name">
-        <h5 class="text-center">{{ category.name }}</h5>
+    <div :id="props.category.name">
+        <h5 class="text-center">{{ props.category.name }}</h5>
     </div>
     <div class="p-6">
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
-            <template v-for=" product in category.products">
+            <template v-for=" product in props.category.products">
                 <div class="overflow-hidden rounded-2xl bg-gray-50">
                     <div class="flex items-center h-[180px] overflow-hidden">
                         <img src="https://thumbnails.production.thenounproject.com/c4UZhX8RJFowtAoq8OZlUjIFmBg=/fit-in/1000x1000/photos.production.thenounproject.com/photos/D0EE41F3-3CB3-4F1E-B6E5-4CCE5B1DCB17.jpg"
@@ -98,7 +84,7 @@ const closeModal = () => {
     </div>
 
     <template v-if="isModalOpen">
-        <ProductDetailModal :category-name="category.name" :is-modal-open="isModalOpen" :close-modal="closeModal"
+        <ProductDetailModal :category-name="props.category.name" :is-modal-open="isModalOpen" :close-modal="closeModal"
             :product-id="selectedProduct.id" :product-name="selectedProduct.name"
             :product-description="selectedProduct.description" :price="selectedProduct.price"
             :discount="selectedProduct.discount" :add-order-item="props.addOrderItem">
