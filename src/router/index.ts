@@ -14,6 +14,7 @@ import {
 import AdminProducts from "../views/admin/AdminProducts.vue";
 import AdminUploadNewProduct from "../views/admin/AdminUploadNewProduct.vue";
 import AdminUnpaidOrders from "../views/admin/AdminUnpaidOrders.vue";
+import AdminCategory from "../views/admin/AdminCategory.vue";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -58,6 +59,11 @@ const routes: RouteRecordRaw[] = [
         path: "unpaid-orders",
         name: "unpaid orders",
         component: AdminUnpaidOrders,
+      },
+      {
+        path: "categories",
+        name: "categories",
+        component: AdminCategory,
       },
     ],
   },
