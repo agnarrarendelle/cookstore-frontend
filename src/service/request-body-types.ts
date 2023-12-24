@@ -15,6 +15,24 @@ export interface ProductImageBody {
   productId: number;
 }
 
+export interface CategoryBody {
+  name: string;
+}
+
+export interface OrderItemBody {
+  productId: number;
+  number: number;
+  productName: string;
+  price:number
+}
+
+export interface OrderBody {
+  status?: OrderStatus;
+  tableNumber: number;
+  remark: string;
+  orderItems: OrderItemBody[];
+}
+
 export enum OrderStatus {
   Paid = "Paid",
   Unpaid = "Unpaid",
